@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Timer</string>
+    <string name="title_timer">Timer</string>
+    <string name="title_config">Configure</string>
+    <string name="plus_sign" translatable="false">+</string>
+    <string name="minus_sign" translatable="false">-</string>
+    <string name="start_button">Start</string>
+    <string name="pause_button">Pause</string>
+    <string name="stop_button">Stop</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="set_timer_button">Set timer</string>
+    <string name="minutes_text">Minutes</string>
+    <string name="seconds_text">Seconds</string>
+    <string name="reset_button">Reset</string>
+    <string name="timer_set">Timer set!</string>
+    <string name="timer_reset">Timer reset!</string>
+
+    <!--Hint for screen readers-->
+    <string name="plus10MinutesButtonHint">Plus 10 minutes</string>
+    <string name="plus1MinutesButtonHint">Plus 1 minutes</string>
+    <string name="plus10SecondsButtonHint">Plus 10 seconds</string>
+    <string name="plus1SecondsButtonHint">Plus 1 seconds</string>
+    <string name="minus10MinutesButtonHint">Minus 10 minutes</string>
+    <string name="minus1MinutesButtonHint">Minus 1 minutes</string>
+    <string name="minus10SecondsButtonHint">Minus 10 seconds </string>
+    <string name="minus1SecondsButtonHint">Minus 1 seconds</string>
+
+</resources>
