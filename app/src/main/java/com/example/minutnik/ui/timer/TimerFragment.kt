@@ -2,6 +2,7 @@ package com.example.minutnik.ui.timer
 
 import android.Manifest
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -57,6 +58,7 @@ class TimerFragment : Fragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val appContext = requireContext().applicationContext
+        val sharedPreferences = appContext.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
         val notificationIntent = Intent(appContext, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             }
@@ -80,18 +82,21 @@ class TimerFragment : Fragment() {
                     startButton.setEnabled(false)
                     pauseButton.setEnabled(true)
                     stopButton.setEnabled(true)
+                    sharedPreferences.edit().putBoolean("notification_sent", false).apply()
                 }
                 TimerState.PAUSED -> {
                     startButton.text = appContext.getString(R.string.start_button)
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(true)
+                    sharedPreferences.edit().putBoolean("notification_sent", false).apply()
                 }
                 TimerState.STOPPED -> {
                     startButton.text = appContext.getString(R.string.start_button)
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(false)
+                    sharedPreferences.edit().putBoolean("notification_sent", false).apply()
                 }
                 TimerState.OVER -> {
                     startButton.text = appContext.getString(R.string.reset_button)
@@ -101,7 +106,10 @@ class TimerFragment : Fragment() {
 
                     with(NotificationManagerCompat.from(appContext)) {
                         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                            notify(1, notification.build())
+                            if (!sharedPreferences.getBoolean("notification_sent", false)) {
+                                sharedPreferences.edit().putBoolean("notification_sent", true).apply()
+                                notify(1, notification.build())
+                            }
                         }
                     }
                 }
