@@ -45,4 +45,9 @@ class TimerViewModel : ViewModel() {
     fun stopTimer() = _timer.stopTimer()
 
     fun getTimeLeftNumbers() = getTimeNumbers(timeLeft.value)
+
+    override fun onCleared() {
+        super.onCleared()
+        stopTimer()
+    }
 }

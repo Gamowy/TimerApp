@@ -42,6 +42,7 @@ class Timer(seconds: Int) {
     fun updateTimer(seconds: Int) {
         var newTime = timeLeft.value!! + seconds
         newTime = if (newTime < 0) 0 else newTime
+        newTime = if (newTime > 5999) 5999 else newTime
         timeLeft.value = newTime
         if(timeLeft.value == 0) {
             timeOver()

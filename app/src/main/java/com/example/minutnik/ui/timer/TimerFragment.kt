@@ -55,6 +55,7 @@ class TimerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         val appContext = requireContext().applicationContext
         val notificationIntent = Intent(appContext, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -75,25 +76,25 @@ class TimerFragment : Fragment() {
             when(timerState)
             {
                 TimerState.RUNNING -> {
-                    startButton.text = getString(R.string.start_button)
+                    startButton.text = appContext.getString(R.string.start_button)
                     startButton.setEnabled(false)
                     pauseButton.setEnabled(true)
                     stopButton.setEnabled(true)
                 }
                 TimerState.PAUSED -> {
-                    startButton.text = getString(R.string.start_button)
+                    startButton.text = appContext.getString(R.string.start_button)
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(true)
                 }
                 TimerState.STOPPED -> {
-                    startButton.text = getString(R.string.start_button)
+                    startButton.text = appContext.getString(R.string.start_button)
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(false)
                 }
                 TimerState.OVER -> {
-                    startButton.text = getString(R.string.reset_button)
+                    startButton.text = appContext.getString(R.string.reset_button)
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(false)
@@ -163,7 +164,6 @@ class TimerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        timerViewModel.stopTimer()
         timerViewModel.timerState.removeObserver(timeStateObserver)
         onSaveInstanceState(Bundle())
     }
