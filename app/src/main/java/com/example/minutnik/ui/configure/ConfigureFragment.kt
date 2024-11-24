@@ -1,11 +1,9 @@
 package com.example.minutnik.ui.configure
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -44,9 +42,8 @@ class ConfigureFragment : Fragment() {
             val timeNumbers = TimeNumbers(minutes10Picker.value, minutes1Picker.value, seconds10Picker.value, seconds1Picker.value)
             timerViewModel.setTimer(timeNumbers)
             timerViewModel.stopTimer()
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(this.view?.windowToken, 0)
             setTimerToast.show()
+
         }
         binding.resetButton.setOnClickListener {
             val timeNumbers = TimeNumbers(0, 0, 0, 0)

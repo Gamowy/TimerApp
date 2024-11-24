@@ -77,7 +77,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/minutes1Picker"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:descendantFocusability="blocksDescendants"
+                    />
 
                 <NumberPicker
                     android:id="@+id/minutes1Picker"
@@ -88,7 +90,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/col"
                     app:layout_constraintStart_toEndOf="@+id/minutes10Picker"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:descendantFocusability="blocksDescendants"
+                    />
 
                 <NumberPicker
                     android:id="@+id/seconds10Picker"
@@ -99,7 +103,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/seconds1Picker"
                     app:layout_constraintStart_toEndOf="@+id/col"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:descendantFocusability="blocksDescendants"
+                    />
 
                 <NumberPicker
                     android:id="@+id/seconds1Picker"
@@ -110,7 +116,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/seconds10Picker"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:descendantFocusability="blocksDescendants"
+                    />
 
                 <TextView
                     android:id="@+id/col"
