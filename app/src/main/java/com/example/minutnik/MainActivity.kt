@@ -4,14 +4,12 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -46,20 +44,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAndRequestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
             val hasAskedForPermission = sharedPreferences.getBoolean("asked_for_permissions", false)
             if (!hasAskedForPermission) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
                 sharedPreferences.edit().putBoolean("asked_for_permissions", true).apply()
             }
-            if (checkPermission == PackageManager.PERMISSION_GRANTED) {
-                setupNotificationChannel()
-            }
         }
-        else {
-            setupNotificationChannel()
-        }
+        setupNotificationChannel()
     }
 
     private fun setupNotificationChannel() {
