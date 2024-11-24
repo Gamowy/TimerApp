@@ -27,6 +27,7 @@ class TimerViewModel : ViewModel() {
             return TimeNumbers(minutes10, minutes1, seconds10, seconds1)
         }
         return TimeNumbers()
+
     }
 
     fun resetTimer() = _timer.resetTimer()

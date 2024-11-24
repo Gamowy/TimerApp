@@ -20,4 +20,8 @@
     <string name="reset_button">Reset</string>
     <string name="timer_set">Ustawiono minutnik!</string>
     <string name="timer_reset">Zresetowano minutnik!</string>
+    <string name="notification_channel_name">Powiadmonienia minutnika</string>
+    <string name="notification_channel_desc">Powiadomienia informujące o tym, że czas minutnika dobiegł końca</string>
+    <string name="notification_timer_title">Minutnik dobiegł końca</string>
+    <string name="notification_timer_desc">Uruchomiony minutnik dobiegł końca</string>
 </resources>

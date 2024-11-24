@@ -25,7 +25,6 @@ class Timer(seconds: Int) {
     }
     private var timerJob: Job? = null
 
-
     fun resetTimer() {
         timeLeft.value = timeSet.value
     }

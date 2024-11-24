@@ -14,7 +14,10 @@
     <string name="reset_button">Reset</string>
     <string name="timer_set">Timer set!</string>
     <string name="timer_reset">Timer reset!</string>
-
+    <string name="notification_channel_name">Timer Notifications</string>
+    <string name="notification_channel_desc">Notifications that inform that timer ended</string>
+    <string name="notification_timer_title">Timer has ended</string>
+    <string name="notification_timer_desc">Timer that you stared has ended</string>
     <!--Hint for screen readers-->
     <string name="plus10MinutesButtonHint">Plus 10 minutes</string>
     <string name="plus1MinutesButtonHint">Plus 1 minutes</string>
@@ -24,5 +27,4 @@
     <string name="minus1MinutesButtonHint">Minus 1 minutes</string>
     <string name="minus10SecondsButtonHint">Minus 10 seconds </string>
     <string name="minus1SecondsButtonHint">Minus 1 seconds</string>
-
 </resources>

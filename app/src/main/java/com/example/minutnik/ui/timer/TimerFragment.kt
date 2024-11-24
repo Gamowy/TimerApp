@@ -1,13 +1,22 @@
 package com.example.minutnik.ui.timer
 
+import android.Manifest
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.example.minutnik.MainActivity
 import com.example.minutnik.R
 import com.example.minutnik.TimeNumbers
 import com.example.minutnik.TimerState
@@ -34,6 +43,8 @@ class TimerFragment : Fragment() {
     private lateinit var seconds10MinusButton: Button
     private lateinit var seconds1MinusButton: Button
 
+    private lateinit var timeStateObserver: Observer<TimerState>
+
     private var _binding: FragmentTimerBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -44,14 +55,24 @@ class TimerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val appContext = requireContext().applicationContext
+        val notificationIntent = Intent(appContext, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+        val pendingIntent = PendingIntent.getActivity(appContext, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
+        val notification = NotificationCompat.Builder(appContext, "notificationChannel")
+            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setContentTitle(getString(R.string.notification_timer_title))
+            .setContentText(getString(R.string.notification_timer_desc))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
         initComponents()
 
-        timerViewModel.timeLeft.observe(viewLifecycleOwner) {
-            updateTimerText(timerViewModel.getTimeLeftNumbers())
-        }
-        timerViewModel.timerState.observe(viewLifecycleOwner) {
-            when(it)
+        timeStateObserver = Observer { timerState ->
+            when(timerState)
             {
                 TimerState.RUNNING -> {
                     startButton.text = getString(R.string.start_button)
@@ -76,13 +97,22 @@ class TimerFragment : Fragment() {
                     startButton.setEnabled(true)
                     pauseButton.setEnabled(false)
                     stopButton.setEnabled(false)
+
+                    with(NotificationManagerCompat.from(appContext)) {
+                        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                            notify(1, notification.build())
+                        }
+                    }
                 }
-                else -> Unit
             }
+        }
+        timerViewModel.timerState.observeForever(timeStateObserver)
+        timerViewModel.timeLeft.observe(viewLifecycleOwner) {
+            updateTimerText(timerViewModel.getTimeLeftNumbers())
         }
 
         startButton.setOnClickListener {
-            if(timerViewModel.timerState.value == TimerState.OVER) {
+            if (timerViewModel.timerState.value == TimerState.OVER) {
                 timerViewModel.resetTimer()
                 timerViewModel.stopTimer()
             }
@@ -128,9 +158,14 @@ class TimerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        timerViewModel.pauseTimer()
-        onSaveInstanceState(Bundle())
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timerViewModel.stopTimer()
+        timerViewModel.timerState.removeObserver(timeStateObserver)
+        onSaveInstanceState(Bundle())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
