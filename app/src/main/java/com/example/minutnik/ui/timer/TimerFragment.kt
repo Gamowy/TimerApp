@@ -64,7 +64,7 @@ class TimerFragment : Fragment() {
             }
         val pendingIntent = PendingIntent.getActivity(appContext, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(appContext, "notificationChannel")
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.notification_timer_title))
             .setContentText(getString(R.string.notification_timer_desc))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
